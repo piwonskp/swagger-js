@@ -1,0 +1,49 @@
+openapi: 3.0.2
+info:
+  title: Gurukosu
+  version: 0.0.1
+servers:
+  - url: /api/v1/
+components:
+  schemas:
+    Measure:
+        type: object
+        required:
+          - date
+          - value
+        properties:
+          date:
+            type: string
+          value:
+            type: integer
+        example:
+          value: 0
+          date: "2011-10-05T14:48:00.000Z"
+paths:
+  /measure/list:
+    get:
+      operationId: gurukosu.handlers.v1.measure.list
+      responses:
+        200:
+          description: List measures
+          content:
+            application/jsan:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Measure"
+  /measure/add:
+    post:
+      operationId: gurukosu.handlers.v1.measure.add
+      requestBody:
+        content:
+          application/jsan:
+            schema:
+              $ref: "#/components/schemas/Measure"
+      responses:
+        200:
+          description: Add measure
+          content:
+            application/jsan:
+              schema:
+                $ref: "#/components/schemas/Measure"

@@ -12,6 +12,7 @@ import SWAGGER2_PARAMETER_BUILDERS from './swagger2/parameter-builders'
 import * as OAS3_PARAMETER_BUILDERS from './oas3/parameter-builders'
 import oas3BuildRequest from './oas3/build-request'
 import swagger2BuildRequest from './swagger2/build-request'
+import {compress, decompress} from './compression'
 import {
   getOperationRaw,
   idFromPathMethod,
@@ -78,12 +79,14 @@ export function execute({
 
   const request = self.buildRequest({spec, operationId, parameters, securities, http, ...extras})
 
+  request.body = compress(request)
+
   if (request.body && (isPlainObject(request.body) || isArray(request.body))) {
     request.body = JSON.stringify(request.body)
   }
 
   // Build request and execute it
-  return http(request)
+  return decompress(spec, operationId, http(request))
 }
 
 // Build a request, which can be handled by the `http.js` implementation.
