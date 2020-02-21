@@ -58,6 +58,7 @@ Swagger.prototype = {
 
     return Swagger.execute({
       spec: this.spec,
+      encodings: this.encodings,
       http: this.http,
       securities: {authorized: this.authorizations},
       contextUrl: typeof this.url === 'string' ? this.url : undefined,

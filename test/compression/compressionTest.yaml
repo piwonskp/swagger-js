@@ -1,0 +1,18 @@
+openapi: 3.0.2
+info:
+  title: Gurukosu
+  version: 0.0.1
+servers:
+  - url: /api/v1/
+paths:
+  /compress/anything:
+    post:
+      parameters:
+        - name: Content-Encoding
+          in: header
+      operationId: compress.anything
+      requestBody:
+        content: text/html
+      responses:
+        200:
+          content: text/html

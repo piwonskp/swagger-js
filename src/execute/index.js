@@ -79,14 +79,14 @@ export function execute({
 
   const request = self.buildRequest({spec, operationId, parameters, securities, http, ...extras})
 
-  request.body = compress(request)
+  request.body = compress(extras.encodings, request)
 
   if (request.body && (isPlainObject(request.body) || isArray(request.body))) {
     request.body = JSON.stringify(request.body)
   }
 
   // Build request and execute it
-  return decompress(spec, operationId, http(request))
+  return decompress(extras.encodings, spec, operationId, http(request))
 }
 
 // Build a request, which can be handled by the `http.js` implementation.
